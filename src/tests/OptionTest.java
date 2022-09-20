@@ -1,5 +1,3 @@
-package tests;
-
 import option.Option;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +9,7 @@ class OptionTest
 	OptionTest() {}
 
 	@Test
-	public final void testMapNone()
+	final void testMapNone()
 	{
 		Option<Integer> option = new Option<>(42);
 		Option<Integer> newOption = option.map((Integer value) -> 2 * value);
@@ -20,7 +18,7 @@ class OptionTest
 	}
 
 	@Test
-	public final void testMapSome()
+	final void testMapSome()
 	{
 		Option<Integer> option = new Option<>();
 		Option<Integer> newOption = option.map((Integer value) -> 5 * value);

@@ -1,5 +1,3 @@
-package tests;
-
 import option.MutableOption;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,7 +8,7 @@ class MutableOptionTest
 	MutableOptionTest() {}
 
 	@Test
-	public final void testResetSome()
+	final void testResetSome()
 	{
 		MutableOption<Integer> option = new MutableOption<>(15);
 		option.reset();
@@ -19,7 +17,7 @@ class MutableOptionTest
 	}
 
 	@Test
-	public final void testResetNone()
+	final void testResetNone()
 	{
 		MutableOption<Integer> option = new MutableOption<>();
 		option.reset();
@@ -28,7 +26,7 @@ class MutableOptionTest
 	}
 
 	@Test
-	public final void testSetNone()
+	final void testSetNone()
 	{
 		MutableOption<Integer> option = new MutableOption<>();
 		option.set(12);
@@ -46,7 +44,7 @@ class MutableOptionTest
 	}
 
 	@Test
-	public final void testSetNoneWithNull()
+	final void testSetNoneWithNull()
 	{
 		MutableOption<Integer> option = new MutableOption<>();
 		option.set(null);
@@ -55,7 +53,7 @@ class MutableOptionTest
 	}
 
 	@Test
-	public final void testSetSomeWithNull()
+	final void testSetSomeWithNull()
 	{
 		MutableOption<Integer> option = new MutableOption<>(23);
 		option.set(null);
