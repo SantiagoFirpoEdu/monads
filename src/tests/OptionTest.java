@@ -15,7 +15,7 @@ class OptionTest
 	{
 		Option<Integer> option = new Option<>(42);
 		Option<Integer> newOption = option.map((Integer value) -> 2 * value);
-		Assertions.assertTrue(newOption.isSet());
+		Assertions.assertTrue(newOption.getIsSet());
 		Assertions.assertEquals(84, newOption.getValueOr(0));
 	}
 
@@ -24,7 +24,7 @@ class OptionTest
 	{
 		Option<Integer> option = new Option<>();
 		Option<Integer> newOption = option.map((Integer value) -> 5 * value);
-		Assertions.assertFalse(newOption.isSet());
+		Assertions.assertFalse(newOption.getIsSet());
 		Assertions.assertEquals(128, newOption.getValueOr(128));
 	}
 
@@ -83,13 +83,13 @@ class OptionTest
 	public final void testIsSetSome()
 	{
 		Option<Integer> option = new Option<>(99);
-		Assertions.assertTrue(option.isSet());
+		Assertions.assertTrue(option.getIsSet());
 	}
 
 	@Test
 	public final void testIsSetNone()
 	{
 		Option<Integer> option = new Option<>();
-		Assertions.assertFalse(option.isSet());
+		Assertions.assertFalse(option.getIsSet());
 	}
 }

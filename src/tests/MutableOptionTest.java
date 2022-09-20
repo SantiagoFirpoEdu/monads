@@ -14,7 +14,7 @@ class MutableOptionTest
 	{
 		MutableOption<Integer> option = new MutableOption<>(15);
 		option.reset();
-		Assertions.assertFalse(option.isSet());
+		Assertions.assertFalse(option.getIsSet());
 		Assertions.assertEquals(4, option.getValueOr(4));
 	}
 
@@ -23,7 +23,7 @@ class MutableOptionTest
 	{
 		MutableOption<Integer> option = new MutableOption<>();
 		option.reset();
-		Assertions.assertFalse(option.isSet());
+		Assertions.assertFalse(option.getIsSet());
 		Assertions.assertEquals(5, option.getValueOr(5));
 	}
 
@@ -32,7 +32,7 @@ class MutableOptionTest
 	{
 		MutableOption<Integer> option = new MutableOption<>();
 		option.set(12);
-		Assertions.assertTrue(option.isSet());
+		Assertions.assertTrue(option.getIsSet());
 		Assertions.assertEquals(12, option.getValueOr(4));
 	}
 
@@ -41,7 +41,7 @@ class MutableOptionTest
 	{
 		MutableOption<Integer> option = new MutableOption<>(23);
 		option.set(14);
-		Assertions.assertTrue(option.isSet());
+		Assertions.assertTrue(option.getIsSet());
 		Assertions.assertEquals(14, option.getValueOr(5));
 	}
 
@@ -50,7 +50,7 @@ class MutableOptionTest
 	{
 		MutableOption<Integer> option = new MutableOption<>();
 		option.set(null);
-		Assertions.assertFalse(option.isSet());
+		Assertions.assertFalse(option.getIsSet());
 		Assertions.assertEquals(4, option.getValueOr(4));
 	}
 
@@ -59,7 +59,7 @@ class MutableOptionTest
 	{
 		MutableOption<Integer> option = new MutableOption<>(23);
 		option.set(null);
-		Assertions.assertFalse(option.isSet());
+		Assertions.assertFalse(option.getIsSet());
 		Assertions.assertEquals(5, option.getValueOr(5));
 	}
 }

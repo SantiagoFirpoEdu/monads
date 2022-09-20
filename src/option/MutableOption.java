@@ -15,12 +15,12 @@ public class MutableOption<SomeValueType> extends Option<SomeValueType>
 	public final void reset()
 	{
 		setValue(null);
-		setSet(false);
+		setIsSet(false);
 	}
 
 	public final void set(SomeValueType value)
 	{
 		setValue(value);
-		setSet(value != null);
+		setIsSet(value != null);
 	}
 }

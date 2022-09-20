@@ -1,4 +1,4 @@
-package option;
+package common;
 
 public interface FFunctor<ValueType>
 {

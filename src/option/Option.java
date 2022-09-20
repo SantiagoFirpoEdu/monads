@@ -1,8 +1,10 @@
 package option;
 
+import common.FFunctor;
 import common.FMapper;
+import common.FNoneFunctor;
 
-public class Option<SomeValueType>
+public class Option<SomeValueType> implements IOption<SomeValueType>
 {
 	private SomeValueType value;
 
@@ -10,7 +12,8 @@ public class Option<SomeValueType>
 
 	public Option()
 	{
-
+		value = null;
+		isSet = false;
 	}
 
 	public Option(SomeValueType value)
@@ -21,14 +24,8 @@ public class Option<SomeValueType>
 
 	public final <ReturnType> Option<ReturnType> map(FMapper<SomeValueType, ReturnType> optionMapper)
 	{
-		if (isSet)
-		{
-			return new Option<>(optionMapper.map(value));
-		}
-		else
-		{
-			return new Option<>();
-		}
+		return isSet ? new Option<>(optionMapper.map(value))
+			         : new Option<>();
 	}
 
 	public final void match(FFunctor<SomeValueType> someFunctor)
@@ -62,7 +59,7 @@ public class Option<SomeValueType>
 	@Override
 	public final String toString()
 	{
-		return "option.Option{value=%s, isSet=%s}".formatted(value, isSet);
+		return "option.Option{value=%s, getIsSet=%s}".formatted(value, isSet);
 	}
 
 	protected final SomeValueType getValue()
@@ -75,17 +72,17 @@ public class Option<SomeValueType>
 		this.value = value;
 	}
 
-	public boolean isSet()
+	public final boolean getIsSet()
 	{
 		return isSet;
 	}
 
-	protected void setSet(boolean set)
+	protected final void setIsSet(boolean set)
 	{
 		isSet = set;
 	}
 
-	public SomeValueType getValueOr(SomeValueType defaultValue)
+	public final SomeValueType getValueOr(SomeValueType defaultValue)
 	{
 		return isSet ? value : defaultValue;
 	}

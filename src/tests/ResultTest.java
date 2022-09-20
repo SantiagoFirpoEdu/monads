@@ -3,93 +3,94 @@ package tests;
 import option.Option;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import result.Result;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-class OptionTest
+class ResultTest
 {
-	OptionTest() {}
+	ResultTest() {}
 
 	@Test
-	public final void testMapNone()
+	public final void testMapOk()
 	{
-		Option<Integer> option = new Option<>(42);
-		Option<Integer> newOption = option.map((Integer value) -> 2 * value);
-		Assertions.assertTrue(newOption.getIsSet());
-		Assertions.assertEquals(84, newOption.getValueOr(0));
+		Result<Boolean, Character> result = Result.ok(true);
+		Result<Integer, String> newResult = result.map((Boolean value) -> Boolean.TRUE.equals(value) ? 86 : -1, Object::toString);
+		Assertions.assertTrue(newResult.getIsSuccess());
+		Assertions.assertEquals(86, newResult.getOkValueOr(0));
 	}
 
 	@Test
-	public final void testMapSome()
+	public final void testMapError()
 	{
-		Option<Integer> option = new Option<>();
-		Option<Integer> newOption = option.map((Integer value) -> 5 * value);
-		Assertions.assertFalse(newOption.getIsSet());
-		Assertions.assertEquals(128, newOption.getValueOr(128));
+		Result<Boolean, Character> result = Result.error('a');
+		Result<Integer, String> newResult = result.map((Boolean value) -> Boolean.TRUE.equals(value) ? 32 : -1, (Character character) -> character.toString());
+		Assertions.assertFalse(newResult.getIsSuccess());
+		Assertions.assertEquals("a", newResult.getErrorValueOr("hg"));
 	}
 
 
 	@Test
-	public final void testMatchNone()
+	public final void testMatchOk()
 	{
-		Option<Integer> option = new Option<>();
+		Result<Integer, String> result = Result.ok(123);
 		AtomicReference<Integer> someValue = new AtomicReference<>(134);
-		option.match(someValue::set);
-		Assertions.assertEquals(134, someValue.get());
+		result.matchOk(someValue::set);
+		Assertions.assertEquals(123, someValue.get());
 	}
 
 	@Test
-	public final void testMatchSome()
+	public final void testMatchError()
 	{
-		Option<Integer> option = new Option<>(85);
-		AtomicReference<Integer> someValue = new AtomicReference<>(0);
-		option.match(someValue::set);
-		Assertions.assertEquals(85, someValue.get());
+		Result<String, Boolean> result = Result.error(true);
+		AtomicReference<Boolean> someValue = new AtomicReference<>(false);
+		result.matchError(someValue::set);
+		Assertions.assertEquals(true, someValue.get());
 	}
 
 	@Test
-	public final void testMatchBothNone()
+	public final void testMatchBothOk()
 	{
-		Option<Integer> option = new Option<>();
+		Result<Integer, String> result = Result.ok(12);
 		AtomicReference<Integer> someValue = new AtomicReference<>(999);
-		option.match(someValue::set, () -> someValue.set(1234) );
-		Assertions.assertEquals(1234, someValue.get());
+		result.match(someValue::set, (String error) -> someValue.set(1234) );
+		Assertions.assertEquals(12, someValue.get());
 	}
 
 	@Test
-	public final void testMatchBothSome()
+	public final void testMatchBothError()
 	{
-		Option<Integer> option = new Option<>(42);
+		Result<Character, Boolean> result = Result.error(true);
 		AtomicReference<Integer> someValue = new AtomicReference<>(999);
-		option.match(someValue::set, () -> someValue.set(1234) );
+		result.match((Character okValue) -> someValue.set(87), (Boolean errorValue) -> someValue.set(errorValue ? 42 : 90));
 		Assertions.assertEquals(42, someValue.get());
 	}
 
 	@Test
-	public final void testGetValueSome()
+	public final void testGetOkValueOr()
 	{
-		Option<Integer> option = new Option<>(42);
-		Assertions.assertEquals(42, option.getValueOr(12));
+		Result<Integer, Character> result = Result.ok(42);
+		Assertions.assertEquals(42, result.getOkValueOr(12));
 	}
 
 	@Test
-	public final void testGetValueNone()
+	public final void testGetOkValueOrWithError()
 	{
-		Option<Integer> option = new Option<>();
-		Assertions.assertEquals(12, option.getValueOr(12));
+		Result<Integer, String> result = Result.error("AA");
+		Assertions.assertEquals(12, result.getOkValueOr(12));
 	}
 
 	@Test
-	public final void testIsSetSome()
+	public final void testIsSuccessOk()
 	{
-		Option<Integer> option = new Option<>(99);
-		Assertions.assertTrue(option.getIsSet());
+		Result<Integer, Boolean> result = Result.ok(1);
+		Assertions.assertTrue(result.getIsSuccess());
 	}
 
 	@Test
-	public final void testIsSetNone()
+	public final void testIsSuccessError()
 	{
-		Option<Integer> option = new Option<>();
-		Assertions.assertFalse(option.getIsSet());
+		Result<Integer, Character> result = Result.error('k');
+		Assertions.assertFalse(result.getIsSuccess());
 	}
 }
