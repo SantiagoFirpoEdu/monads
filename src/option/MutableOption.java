@@ -7,7 +7,7 @@ public class MutableOption<SomeValueType> extends Option<SomeValueType>
 		super();
 	}
 
-	public MutableOption(SomeValueType value)
+	public MutableOption(final SomeValueType value)
 	{
 		super(value);
 	}
@@ -18,7 +18,7 @@ public class MutableOption<SomeValueType> extends Option<SomeValueType>
 		setIsSet(false);
 	}
 
-	public final void set(SomeValueType value)
+	public final void set(final SomeValueType value)
 	{
 		setValue(value);
 		setIsSet(value != null);

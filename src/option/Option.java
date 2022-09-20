@@ -16,19 +16,19 @@ public class Option<SomeValueType> implements IOption<SomeValueType>
 		isSet = false;
 	}
 
-	public Option(SomeValueType value)
+	public Option(final SomeValueType value)
 	{
 		this.value = value;
 		isSet = value != null;
 	}
 
-	public final <ReturnType> Option<ReturnType> map(FMapper<SomeValueType, ReturnType> optionMapper)
+	public final <ReturnType> Option<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper)
 	{
 		return isSet ? new Option<>(optionMapper.map(value))
 			         : new Option<>();
 	}
 
-	public final void match(FFunctor<SomeValueType> someFunctor)
+	public final void match(final FFunctor<SomeValueType> someFunctor)
 	{
 		if (isSet)
 		{
@@ -36,7 +36,7 @@ public class Option<SomeValueType> implements IOption<SomeValueType>
 		}
 	}
 
-	public final void match(FNoneFunctor noneFunctor)
+	public final void match(final FNoneFunctor noneFunctor)
 	{
 		if (!isSet)
 		{
@@ -44,7 +44,7 @@ public class Option<SomeValueType> implements IOption<SomeValueType>
 		}
 	}
 
-	public final void match(FFunctor<SomeValueType> someFunctor, FNoneFunctor noneFunctor)
+	public final void match(final FFunctor<SomeValueType> someFunctor, final FNoneFunctor noneFunctor)
 	{
 		if (isSet)
 		{
@@ -67,7 +67,7 @@ public class Option<SomeValueType> implements IOption<SomeValueType>
 		return value;
 	}
 
-	protected final void setValue(SomeValueType value)
+	protected final void setValue(final SomeValueType value)
 	{
 		this.value = value;
 	}
@@ -77,12 +77,12 @@ public class Option<SomeValueType> implements IOption<SomeValueType>
 		return isSet;
 	}
 
-	protected final void setIsSet(boolean set)
+	protected final void setIsSet(final boolean set)
 	{
 		isSet = set;
 	}
 
-	public final SomeValueType getValueOr(SomeValueType defaultValue)
+	public final SomeValueType getValueOr(final SomeValueType defaultValue)
 	{
 		return isSet ? value : defaultValue;
 	}

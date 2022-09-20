@@ -2,5 +2,5 @@ package common;
 
 public interface FMapper<InType, OutType>
 {
-	OutType map(InType value);
+	OutType map(final InType value);
 }
