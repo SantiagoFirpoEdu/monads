@@ -35,7 +35,7 @@ class MutableOptionTest
 	}
 
 	@Test
-	public final void testSetSome()
+	final void testSetSome()
 	{
 		MutableOption<Integer> option = new MutableOption<>(23);
 		option.set(14);
