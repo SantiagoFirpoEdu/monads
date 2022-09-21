@@ -28,7 +28,7 @@ public class Option<SomeValueType> implements IOption<SomeValueType>
 			         : new Option<>();
 	}
 
-	public final void match(final FFunctor<SomeValueType> someFunctor)
+	public final void matchSome(FFunctor<SomeValueType> someFunctor)
 	{
 		if (isSet)
 		{
@@ -36,7 +36,7 @@ public class Option<SomeValueType> implements IOption<SomeValueType>
 		}
 	}
 
-	public final void match(final FNoneFunctor noneFunctor)
+	public final void matchNone(FNoneFunctor noneFunctor)
 	{
 		if (!isSet)
 		{

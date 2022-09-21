@@ -52,7 +52,7 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 	{
 		if (isSuccess)
 		{
-			okValue.match(okFunctor);
+			okValue.matchSome(okFunctor);
 		}
 	}
 
@@ -61,7 +61,7 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 	{
 		if (!isSuccess)
 		{
-			errorValue.match(errorFunctor);
+			errorValue.matchSome(errorFunctor);
 		}
 	}
 
@@ -69,11 +69,11 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 	{
 		if (isSuccess)
 		{
-			okValue.match(okFunctor);
+			okValue.matchSome(okFunctor);
 		}
 		else
 		{
-			errorValue.match(errorFunctor);
+			errorValue.matchSome(errorFunctor);
 		}
 	}
 

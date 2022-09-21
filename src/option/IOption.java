@@ -6,10 +6,10 @@ import common.FNoneFunctor;
 
 public interface IOption<SomeValueType>
 {
-	<ReturnType> IOption<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper);
-	void match(final FFunctor<SomeValueType> someFunctor);
-	void match(final FNoneFunctor noneFunctor);
-	void match(final FFunctor<SomeValueType> someFunctor, final FNoneFunctor noneFunctor);
+	<ReturnType> IOption<ReturnType> map(FMapper<SomeValueType, ReturnType> optionMapper);
+	void matchSome(FFunctor<SomeValueType> someFunctor);
+	void matchNone(FNoneFunctor noneFunctor);
+	void match(FFunctor<SomeValueType> someFunctor, FNoneFunctor noneFunctor);
 	boolean getIsSet();
 	SomeValueType getValueOr(final SomeValueType defaultValue);
 }

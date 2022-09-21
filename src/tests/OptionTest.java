@@ -32,7 +32,7 @@ class OptionTest
 	{
 		Option<Integer> option = new Option<>();
 		AtomicReference<Integer> someValue = new AtomicReference<>(134);
-		option.match(someValue::set);
+		option.matchSome(someValue::set);
 		Assertions.assertEquals(134, someValue.get());
 	}
 
@@ -41,7 +41,7 @@ class OptionTest
 	{
 		Option<Integer> option = new Option<>(85);
 		AtomicReference<Integer> someValue = new AtomicReference<>(0);
-		option.match(someValue::set);
+		option.matchSome(someValue::set);
 		Assertions.assertEquals(85, someValue.get());
 	}
 
