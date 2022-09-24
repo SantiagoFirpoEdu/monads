@@ -83,6 +83,12 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 				         : error(errorMapper.map(errorValue.getValueOr(null)));
 	}
 
+	public final <OutOkType> Result<OutOkType, ErrorType> mapOkValue(FMapper<OkType, OutOkType> okMapper)
+	{
+		return isSuccess ? ok(okMapper.map(okValue.getValueOr(null)))
+				: error(errorValue.getValueOr(null));
+	}
+
 	@Override
 	public final String toString()
 	{
