@@ -28,7 +28,7 @@ class OptionTest
 
 
 	@Test
-	public final void testMatchNone()
+	final void testMatchNone()
 	{
 		Option<Integer> option = new Option<>();
 		AtomicReference<Integer> someValue = new AtomicReference<>(134);
@@ -37,7 +37,7 @@ class OptionTest
 	}
 
 	@Test
-	public final void testMatchSome()
+	final void testMatchSome()
 	{
 		Option<Integer> option = new Option<>(85);
 		AtomicReference<Integer> someValue = new AtomicReference<>(0);
@@ -46,7 +46,7 @@ class OptionTest
 	}
 
 	@Test
-	public final void testMatchBothNone()
+	final void testMatchBothNone()
 	{
 		Option<Integer> option = new Option<>();
 		AtomicReference<Integer> someValue = new AtomicReference<>(999);
@@ -55,7 +55,7 @@ class OptionTest
 	}
 
 	@Test
-	public final void testMatchBothSome()
+	final void testMatchBothSome()
 	{
 		Option<Integer> option = new Option<>(42);
 		AtomicReference<Integer> someValue = new AtomicReference<>(999);
@@ -64,28 +64,28 @@ class OptionTest
 	}
 
 	@Test
-	public final void testGetValueSome()
+	final void testGetValueSome()
 	{
 		Option<Integer> option = new Option<>(42);
 		Assertions.assertEquals(42, option.getValueOr(12));
 	}
 
 	@Test
-	public final void testGetValueNone()
+	final void testGetValueNone()
 	{
 		Option<Integer> option = new Option<>();
 		Assertions.assertEquals(12, option.getValueOr(12));
 	}
 
 	@Test
-	public final void testIsSetSome()
+	final void testIsSetSome()
 	{
 		Option<Integer> option = new Option<>(99);
 		Assertions.assertTrue(option.getIsSet());
 	}
 
 	@Test
-	public final void testIsSetNone()
+	final void testIsSetNone()
 	{
 		Option<Integer> option = new Option<>();
 		Assertions.assertFalse(option.getIsSet());
