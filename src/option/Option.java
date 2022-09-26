@@ -2,6 +2,7 @@ package option;
 
 import common.FFunctor;
 import common.FMapper;
+import common.FStatefulMapper;
 import common.FNoneFunctor;
 
 public class Option<SomeValueType> implements IOption<SomeValueType>
@@ -26,6 +27,18 @@ public class Option<SomeValueType> implements IOption<SomeValueType>
 	{
 		return isSet ? new Option<>(optionMapper.map(value))
 			         : new Option<>();
+	}
+
+	public final <OutType> OutType mapExpression(final FStatefulMapper<OutType> someMapper, final FStatefulMapper<OutType> noneMapper)
+	{
+		return isSet ? someMapper.map()
+					 : noneMapper.map();
+	}
+
+	public final <OutType> OutType mapExpression(final FMapper<SomeValueType, OutType> someMapper, final FStatefulMapper<OutType> noneMapper)
+	{
+		return isSet ? someMapper.map(value)
+				: noneMapper.map();
 	}
 
 	public final void matchSome(FFunctor<SomeValueType> someFunctor)

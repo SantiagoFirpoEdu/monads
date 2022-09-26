@@ -1,7 +1,7 @@
 package result;
 
-import common.FMapper;
 import common.FFunctor;
+import common.FMapper;
 import option.Option;
 
 public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
@@ -75,6 +75,12 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 		{
 			errorValue.matchSome(errorFunctor);
 		}
+	}
+
+	public final <OutType> OutType mapExpression(FMapper<OkType, OutType> okMapper, FMapper<ErrorType, OutType> errorMapper)
+	{
+		return isSuccess ? okMapper.map(okValue.getValueOr(null))
+						 : errorMapper.map(errorValue.getValueOr(null));
 	}
 
 	public final <OutOkType, OutErrorType> Result<OutOkType, OutErrorType> map(FMapper<OkType, OutOkType> okMapper, FMapper<ErrorType, OutErrorType> errorMapper)
