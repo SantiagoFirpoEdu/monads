@@ -1,5 +1,7 @@
 package option;
 
+import result.Result;
+
 public class MutableOption<SomeValueType> extends Option<SomeValueType>
 {
 	public MutableOption()
@@ -22,5 +24,13 @@ public class MutableOption<SomeValueType> extends Option<SomeValueType>
 	{
 		setValue(value);
 		setIsSet(value != null);
+	}
+
+	public <ErrorType> void  setIfSuccessful(Result<SomeValueType, ErrorType> nextInteger)
+	{
+		if (nextInteger.getIsSuccess())
+		{
+			set(nextInteger.getOkValueOr(null));
+		}
 	}
 }
