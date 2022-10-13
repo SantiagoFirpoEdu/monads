@@ -5,28 +5,28 @@ import common.FMapper;
 import common.FStatefulMapper;
 import common.FNoneFunctor;
 
-public class Option<SomeValueType> implements IOption<SomeValueType>
+public class GOption<SomeValueType> implements GIOption<SomeValueType>
 {
 	private SomeValueType value;
 
 	private boolean isSet;
 
-	public Option()
+	public GOption()
 	{
 		value = null;
 		isSet = false;
 	}
 
-	public Option(final SomeValueType value)
+	public GOption(final SomeValueType value)
 	{
 		this.value = value;
 		isSet = value != null;
 	}
 
-	public final <ReturnType> Option<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper)
+	public final <ReturnType> GOption<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper)
 	{
-		return isSet ? new Option<>(optionMapper.map(value))
-			         : new Option<>();
+		return isSet ? new GOption<>(optionMapper.map(value))
+			         : new GOption<>();
 	}
 
 	public final <OutType> OutType mapExpression(final FStatefulMapper<OutType> someMapper, final FStatefulMapper<OutType> noneMapper)

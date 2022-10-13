@@ -31,5 +31,5 @@ public interface IResult<OkType, ErrorType>
 
 	<OutOkType, OutErrorType> IResult<OutOkType, OutErrorType> map(FMapper<OkType, OutOkType> okMapper, FMapper<ErrorType, OutErrorType> errorMapper);
 
-	<OutErrorType> Result<OkType, OutErrorType> mapErrorValue(FMapper<ErrorType, OutErrorType> errorMapper);
+	<OutErrorType> GResult<OkType, OutErrorType> mapErrorValue(FMapper<ErrorType, OutErrorType> errorMapper);
 }

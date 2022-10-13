@@ -2,25 +2,25 @@ package result;
 
 import common.FFunctor;
 import common.FMapper;
-import either.Either;
+import either.GEither;
 
-public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
+public class GResult<OkType, ErrorType> implements IResult<OkType, ErrorType>
 {
-	private Either<OkType, ErrorType> data;
+	private GEither<OkType, ErrorType> data;
 
-	private Result() {}
+	private GResult() {}
 
-	public static <OkType, ErrorType> Result<OkType, ErrorType> ok(OkType okValue)
+	public static <OkType, ErrorType> GResult<OkType, ErrorType> ok(OkType okValue)
 	{
-		Result<OkType, ErrorType> result = new Result<>();
-		result.data = Either.ofLeftType(okValue);
+		GResult<OkType, ErrorType> result = new GResult<>();
+		result.data = GEither.ofLeftType(okValue);
 		return result;
 	}
 
-	public static <OkType, ErrorType> Result<OkType, ErrorType> error(ErrorType errorValue)
+	public static <OkType, ErrorType> GResult<OkType, ErrorType> error(ErrorType errorValue)
 	{
-		Result<OkType, ErrorType> result = new Result<>();
-		result.data = Either.ofRightType(errorValue);
+		GResult<OkType, ErrorType> result = new GResult<>();
+		result.data = GEither.ofRightType(errorValue);
 		return result;
 	}
 
@@ -96,20 +96,20 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 						 : errorMapper.map(data.getRightValueOr(null));
 	}
 
-	public final <OutOkType, OutErrorType> Result<OutOkType, OutErrorType> map(FMapper<OkType, OutOkType> okMapper, FMapper<ErrorType, OutErrorType> errorMapper)
+	public final <OutOkType, OutErrorType> GResult<OutOkType, OutErrorType> map(FMapper<OkType, OutOkType> okMapper, FMapper<ErrorType, OutErrorType> errorMapper)
 	{
 		return wasSuccessful() ? ok(okMapper.map(data.getLeftValueOr(null)))
 				         : error(errorMapper.map(data.getRightValueOr(null)));
 	}
 
 	@Override
-	public <OutErrorType> Result<OkType, OutErrorType> mapErrorValue(FMapper<ErrorType, OutErrorType> errorMapper)
+	public <OutErrorType> GResult<OkType, OutErrorType> mapErrorValue(FMapper<ErrorType, OutErrorType> errorMapper)
 	{
 		return wasSuccessful() ? ok(data.getLeftValueOr(null))
 							   : error(errorMapper.map(data.getRightValueOr(null)));
 	}
 
-	public final <OutOkType> Result<OutOkType, ErrorType> mapOkValue(FMapper<OkType, OutOkType> okMapper)
+	public final <OutOkType> GResult<OutOkType, ErrorType> mapOkValue(FMapper<OkType, OutOkType> okMapper)
 	{
 		return wasSuccessful() ? ok(okMapper.map(data.getLeftValueOr(null)))
 				               : error(data.getRightValueOr(null));

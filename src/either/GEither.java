@@ -2,29 +2,29 @@ package either;
 
 import common.FFunctor;
 import common.FMapper;
-import option.Option;
+import option.GOption;
 
-public class Either<LeftType, RightType>
+public class GEither<LeftType, RightType>
 {
-	private Option<LeftType> okValue;
-	private Option<RightType> errorValue;
+	private GOption<LeftType> okValue;
+	private GOption<RightType> errorValue;
 
 	private boolean isSuccess;
 
-	private Either() {}
+	private GEither() {}
 
-	public static <LeftType, RightType> Either<LeftType, RightType> ofLeftType(LeftType leftValue)
+	public static <LeftType, RightType> GEither<LeftType, RightType> ofLeftType(LeftType leftValue)
 	{
-		Either<LeftType, RightType> either = new Either<>();
-		either.okValue = new Option<>(leftValue);
+		GEither<LeftType, RightType> either = new GEither<>();
+		either.okValue = new GOption<>(leftValue);
 		either.isSuccess = true;
 		return either;
 	}
 
-	public static <LeftType, RightType> Either<LeftType, RightType> ofRightType(RightType errorValue)
+	public static <LeftType, RightType> GEither<LeftType, RightType> ofRightType(RightType errorValue)
 	{
-		Either<LeftType, RightType> either = new Either<>();
-		either.errorValue = new Option<>(errorValue);
+		GEither<LeftType, RightType> either = new GEither<>();
+		either.errorValue = new GOption<>(errorValue);
 		either.isSuccess = false;
 		return either;
 	}
@@ -78,13 +78,13 @@ public class Either<LeftType, RightType>
 						 : errorMapper.map(errorValue.getValueOr(null));
 	}
 
-	public final <OutOkType, OutErrorType> Either<OutOkType, OutErrorType> map(FMapper<LeftType, OutOkType> okMapper, FMapper<RightType, OutErrorType> errorMapper)
+	public final <OutOkType, OutErrorType> GEither<OutOkType, OutErrorType> map(FMapper<LeftType, OutOkType> okMapper, FMapper<RightType, OutErrorType> errorMapper)
 	{
 		return isSuccess ? ofLeftType(okMapper.map(okValue.getValueOr(null)))
 				         : ofRightType(errorMapper.map(errorValue.getValueOr(null)));
 	}
 
-	public final <OutOkType> Either<OutOkType, RightType> mapLeftValue(FMapper<LeftType, OutOkType> okMapper)
+	public final <OutOkType> GEither<OutOkType, RightType> mapLeftValue(FMapper<LeftType, OutOkType> okMapper)
 	{
 		return isSuccess ? ofLeftType(okMapper.map(okValue.getValueOr(null)))
 				: ofRightType(errorValue.getValueOr(null));

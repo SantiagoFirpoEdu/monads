@@ -1,15 +1,15 @@
 package option;
 
-import result.Result;
+import result.GResult;
 
-public class MutableOption<SomeValueType> extends Option<SomeValueType>
+public class GMutableOption<SomeValueType> extends GOption<SomeValueType>
 {
-	public MutableOption()
+	public GMutableOption()
 	{
 		super();
 	}
 
-	public MutableOption(final SomeValueType value)
+	public GMutableOption(final SomeValueType value)
 	{
 		super(value);
 	}
@@ -26,7 +26,7 @@ public class MutableOption<SomeValueType> extends Option<SomeValueType>
 		setIsSet(value != null);
 	}
 
-	public <ErrorType> void  setIfSuccessful(Result<SomeValueType, ErrorType> nextInteger)
+	public <ErrorType> void  setIfSuccessful(GResult<SomeValueType, ErrorType> nextInteger)
 	{
 		if (nextInteger.wasSuccessful())
 		{
