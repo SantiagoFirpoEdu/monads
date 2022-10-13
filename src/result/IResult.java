@@ -30,4 +30,6 @@ public interface IResult<OkType, ErrorType>
 	void match(FFunctor<OkType> okFunctor, FFunctor<ErrorType> errorFunctor);
 
 	<OutOkType, OutErrorType> IResult<OutOkType, OutErrorType> map(FMapper<OkType, OutOkType> okMapper, FMapper<ErrorType, OutErrorType> errorMapper);
+
+	<OutErrorType> Result<OkType, OutErrorType> mapErrorValue(FMapper<ErrorType, OutErrorType> errorMapper);
 }

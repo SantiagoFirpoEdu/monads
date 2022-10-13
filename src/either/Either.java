@@ -1,4 +1,4 @@
-package result;
+package either;
 
 import common.FFunctor;
 import common.FMapper;
