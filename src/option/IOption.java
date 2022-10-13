@@ -10,6 +10,6 @@ public interface IOption<SomeValueType>
 	void matchSome(FFunctor<SomeValueType> someFunctor);
 	void matchNone(FNoneFunctor noneFunctor);
 	void match(FFunctor<SomeValueType> someFunctor, FNoneFunctor noneFunctor);
-	boolean getIsSet();
+	boolean isSet();
 	SomeValueType getValueOr(final SomeValueType defaultValue);
 }

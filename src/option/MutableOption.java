@@ -28,9 +28,9 @@ public class MutableOption<SomeValueType> extends Option<SomeValueType>
 
 	public <ErrorType> void  setIfSuccessful(Result<SomeValueType, ErrorType> nextInteger)
 	{
-		if (nextInteger.getIsSuccess())
+		if (nextInteger.wasSuccessful())
 		{
-			set(nextInteger.getOkValueOr(null));
+			set(nextInteger.getOkValueUnsafe());
 		}
 	}
 }

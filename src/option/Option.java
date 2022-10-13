@@ -85,7 +85,7 @@ public class Option<SomeValueType> implements IOption<SomeValueType>
 		this.value = value;
 	}
 
-	public final boolean getIsSet()
+	public final boolean isSet()
 	{
 		return isSet;
 	}

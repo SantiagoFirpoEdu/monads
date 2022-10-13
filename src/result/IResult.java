@@ -15,7 +15,7 @@ public interface IResult<OkType, ErrorType>
 		return null;
 	}
 
-	boolean getIsSuccess();
+	boolean wasSuccessful();
 
 	OkType getOkValueOr(OkType defaultValue);
 

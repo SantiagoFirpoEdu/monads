@@ -30,7 +30,7 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 	}
 
 	@Override
-	public final boolean getIsSuccess()
+	public final boolean wasSuccessful()
 	{
 		return isSuccess;
 	}
@@ -39,6 +39,24 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 	public final OkType getOkValueOr(OkType defaultValue)
 	{
 		return isSuccess ? okValue.getValueOr(null) : defaultValue;
+	}
+
+	public final OkType getOkValueUnsafe() throws IllegalAccessError
+	{
+		if (!isSuccess)
+		{
+			throw new IllegalAccessError("Tried to access ok value when result was unsuccessful");
+		}
+		return okValue.getValueOr(null);
+	}
+
+	public final ErrorType getErrorValueUnsafe() throws IllegalAccessError
+	{
+		if (!isSuccess)
+		{
+			throw new IllegalAccessError("Tried to access error value when result was successful");
+		}
+		return errorValue.getValueOr(null);
 	}
 
 	@Override
