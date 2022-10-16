@@ -47,7 +47,7 @@ public class GResult<OkType, ErrorType> implements IResult<OkType, ErrorType>
 
 	public final ErrorType getErrorValueUnsafe() throws IllegalAccessError
 	{
-		if (!wasSuccessful())
+		if (wasSuccessful())
 		{
 			throw new IllegalAccessError("Tried to access error value when result was successful");
 		}
