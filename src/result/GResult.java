@@ -120,4 +120,24 @@ public class GResult<OkType, ErrorType> implements IResult<OkType, ErrorType>
 	{
 		return "Result{okValue=%s, errorValue=%s, getIsSuccess=%s}".formatted(data.getLeftValueOr(null), data.getRightValueOr(null), wasSuccessful());
 	}
+
+	public static <OkType, ErrorType> GResult<OkType, ErrorType> flatMap(GResult<GResult<OkType, ErrorType>, ErrorType> result)
+	{
+		if (result.wasSuccessful())
+		{
+			var innerResult = result.getOkValueUnsafe();
+			if (innerResult.wasSuccessful())
+			{
+				return GResult.ok(innerResult.getOkValueUnsafe());
+			}
+			else
+			{
+				return GResult.error(innerResult.getErrorValueUnsafe());
+			}
+		}
+		else
+		{
+			return GResult.error(result.getErrorValueUnsafe());
+		}
+	}
 }
