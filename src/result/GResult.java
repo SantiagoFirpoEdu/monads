@@ -125,7 +125,7 @@ public class GResult<OkType, ErrorType> implements IResult<OkType, ErrorType>
 	{
 		if (result.wasSuccessful())
 		{
-			var innerResult = result.getOkValueUnsafe();
+			GResult<OkType, ErrorType> innerResult = result.getOkValueUnsafe();
 			if (innerResult.wasSuccessful())
 			{
 				return GResult.ok(innerResult.getOkValueUnsafe());
