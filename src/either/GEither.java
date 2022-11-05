@@ -94,5 +94,4 @@ public class GEither<LeftType, RightType>
 	private boolean isLeft;
 
 	private GEither() {}
-
 }
