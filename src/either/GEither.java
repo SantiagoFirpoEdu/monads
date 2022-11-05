@@ -6,17 +6,10 @@ import option.GOption;
 
 public class GEither<LeftType, RightType>
 {
-	private GOption<LeftType> okValue;
-	private GOption<RightType> errorValue;
-
-	private boolean isLeft;
-
-	private GEither() {}
-
 	public static <LeftType, RightType> GEither<LeftType, RightType> ofLeftType(LeftType leftValue)
 	{
 		GEither<LeftType, RightType> either = new GEither<>();
-		either.okValue = new GOption<>(leftValue);
+		either.leftValue = new GOption<>(leftValue);
 		either.isLeft = true;
 		return either;
 	}
@@ -24,7 +17,7 @@ public class GEither<LeftType, RightType>
 	public static <LeftType, RightType> GEither<LeftType, RightType> ofRightType(RightType errorValue)
 	{
 		GEither<LeftType, RightType> either = new GEither<>();
-		either.errorValue = new GOption<>(errorValue);
+		either.rightValue = new GOption<>(errorValue);
 		either.isLeft = false;
 		return either;
 	}
@@ -36,19 +29,19 @@ public class GEither<LeftType, RightType>
 
 	public final LeftType getLeftValueOr(LeftType defaultValue)
 	{
-		return isLeft ? okValue.getValueOr(null) : defaultValue;
+		return isLeft ? leftValue.getValueOr(null) : defaultValue;
 	}
 
 	public final RightType getRightValueOr(RightType defaultValue)
 	{
-		return !isLeft ? errorValue.getValueOr(null) : defaultValue;
+		return !isLeft ? rightValue.getValueOr(null) : defaultValue;
 	}
 
 	public final void matchLeft(FFunctor<LeftType> okFunctor)
 	{
 		if (isLeft)
 		{
-			okValue.matchSome(okFunctor);
+			leftValue.matchSome(okFunctor);
 		}
 	}
 
@@ -56,7 +49,7 @@ public class GEither<LeftType, RightType>
 	{
 		if (!isLeft)
 		{
-			errorValue.matchSome(errorFunctor);
+			rightValue.matchSome(errorFunctor);
 		}
 	}
 
@@ -64,35 +57,42 @@ public class GEither<LeftType, RightType>
 	{
 		if (isLeft)
 		{
-			okValue.matchSome(okFunctor);
+			leftValue.matchSome(okFunctor);
 		}
 		else
 		{
-			errorValue.matchSome(errorFunctor);
+			rightValue.matchSome(errorFunctor);
 		}
 	}
 
 	public final <OutType> OutType mapExpression(FMapper<LeftType, OutType> okMapper, FMapper<RightType, OutType> errorMapper)
 	{
-		return isLeft ? okMapper.map(okValue.getValueOr(null))
-		              : errorMapper.map(errorValue.getValueOr(null));
+		return isLeft ? okMapper.map(leftValue.getValueOr(null))
+		              : errorMapper.map(rightValue.getValueOr(null));
 	}
 
 	public final <OutOkType, OutErrorType> GEither<OutOkType, OutErrorType> map(FMapper<LeftType, OutOkType> okMapper, FMapper<RightType, OutErrorType> errorMapper)
 	{
-		return isLeft ? ofLeftType(okMapper.map(okValue.getValueOr(null)))
-		              : ofRightType(errorMapper.map(errorValue.getValueOr(null)));
+		return isLeft ? ofLeftType(okMapper.map(leftValue.getValueOr(null)))
+		              : ofRightType(errorMapper.map(rightValue.getValueOr(null)));
 	}
 
 	public final <OutOkType> GEither<OutOkType, RightType> mapLeftValue(FMapper<LeftType, OutOkType> okMapper)
 	{
-		return isLeft ? ofLeftType(okMapper.map(okValue.getValueOr(null)))
-		              : ofRightType(errorValue.getValueOr(null));
+		return isLeft ? ofLeftType(okMapper.map(leftValue.getValueOr(null)))
+		              : ofRightType(rightValue.getValueOr(null));
 	}
 
 	@Override
 	public final String toString()
 	{
-		return "Result{okValue=%s, errorValue=%s, getIsSuccess=%s}".formatted(okValue, errorValue, isLeft);
+		return "Result{okValue=%s, errorValue=%s, getIsSuccess=%s}".formatted(leftValue, rightValue, isLeft);
 	}
+
+	private GOption<LeftType> leftValue;
+	private GOption<RightType> rightValue;
+	private boolean isLeft;
+
+	private GEither() {}
+
 }
