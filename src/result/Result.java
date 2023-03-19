@@ -4,8 +4,9 @@ import common.FFunctor;
 import common.FMapper;
 import either.Either;
 import either.IEither;
+import option.Option;
 
-public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
+public final class Result<OkType, ErrorType>
 {
 	public static <OkType, ErrorType> Result<OkType, ErrorType> ok(OkType okValue)
 	{
@@ -21,13 +22,11 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 		return result;
 	}
 
-	@Override
 	public final boolean wasSuccessful()
 	{
 		return data.getIsLeft();
 	}
 
-	@Override
 	public final OkType getOkValueOr(OkType defaultValue)
 	{
 		return data.getLeftValueOr(defaultValue);
@@ -51,13 +50,11 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 		return data.getRightValueOr(null);
 	}
 
-	@Override
 	public final ErrorType getErrorValueOr(ErrorType defaultValue)
 	{
 		return data.getRightValueOr(defaultValue);
 	}
 
-	@Override
 	public final void matchOk(FFunctor<OkType> okFunctor)
 	{
 		if (wasSuccessful())
@@ -66,7 +63,6 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 		}
 	}
 
-	@Override
 	public final void matchError(FFunctor<ErrorType> errorFunctor)
 	{
 		if (!wasSuccessful())
@@ -99,7 +95,6 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 				         : error(errorMapper.map(data.getRightValueOr(null)));
 	}
 
-	@Override
 	public <OutErrorType> Result<OkType, OutErrorType> mapErrorValue(FMapper<ErrorType, OutErrorType> errorMapper)
 	{
 		return wasSuccessful() ? ok(data.getLeftValueOr(null))
@@ -136,6 +131,16 @@ public class Result<OkType, ErrorType> implements IResult<OkType, ErrorType>
 		{
 			return Result.error(result.getErrorValueUnsafe());
 		}
+	}
+
+	public Option<OkType> getOk()
+	{
+		return data.getLeft();
+	}
+
+	public Option<ErrorType> getError()
+	{
+		return data.getRight();
 	}
 
 	private Result() {}

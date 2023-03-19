@@ -5,7 +5,7 @@ import common.FMapper;
 import common.FStatefulMapper;
 import common.FNoneFunctor;
 
-public class Option<SomeValueType> implements IOption<SomeValueType>
+public class Option<SomeValueType>
 {
 	public Option()
 	{
