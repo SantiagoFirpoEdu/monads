@@ -2,7 +2,6 @@ package either;
 
 import common.FFunctor;
 import common.FMapper;
-import option.IOption;
 import option.Option;
 
 public class Either<LeftType, RightType> implements IEither<LeftType, RightType>
@@ -115,7 +114,7 @@ public class Either<LeftType, RightType> implements IEither<LeftType, RightType>
     {
     }
 
-    private IOption<LeftType> leftValue;
-    private IOption<RightType> rightValue;
+    private Option<LeftType> leftValue;
+    private Option<RightType> rightValue;
     private boolean isLeft;
 }

@@ -2,6 +2,7 @@ package either;
 
 import common.FFunctor;
 import common.FMapper;
+import option.Option;
 
 public interface IEither<LeftType, RightType>
 {
