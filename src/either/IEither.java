@@ -22,4 +22,8 @@ public interface IEither<LeftType, RightType>
     <OutOkType, OutErrorType> IEither<OutOkType, OutErrorType> map(FMapper<LeftType, OutOkType> okMapper, FMapper<RightType, OutErrorType> errorMapper);
 
     <OutOkType> IEither<OutOkType, RightType> mapLeftValue(FMapper<LeftType, OutOkType> okMapper);
+
+	Option<LeftType> getLeft();
+
+    Option<RightType> getRight();
 }

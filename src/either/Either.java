@@ -94,6 +94,18 @@ public class Either<LeftType, RightType> implements IEither<LeftType, RightType>
     }
 
     @Override
+    public Option<LeftType> getLeft()
+    {
+        return leftValue;
+    }
+
+    @Override
+    public Option<RightType> getRight()
+    {
+        return rightValue;
+    }
+
+    @Override
     public final String toString()
     {
         return "Result{okValue=%s, errorValue=%s, getIsSuccess=%s}".formatted(leftValue, rightValue, isLeft);
