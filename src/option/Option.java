@@ -41,6 +41,14 @@ public class Option<SomeValueType>
 				: noneMapper.map();
 	}
 
+	public <OutOptionalType> Option<OutOptionalType> andThen(FMapper<SomeValueType, Option<OutOptionalType>> optionMapper)
+	{
+		Option<Option<OutOptionalType>> nestedOption = map(optionMapper);
+
+		return nestedOption.isSet && (nestedOption.getValue().isSet) ? Option.some(nestedOption.getValue().getValue())
+		                                       : Option.none();
+	}
+
 	public final void matchSome(FFunctor<SomeValueType> someFunctor)
 	{
 		if (isSet)
@@ -108,5 +116,4 @@ public class Option<SomeValueType>
 
 	private SomeValueType value;
 	private boolean isSet;
-
 }
