@@ -83,8 +83,12 @@ public class Option<SomeValueType>
 		return "option.Option{value=%s, getIsSet=%s}".formatted(value, isSet);
 	}
 
-	protected final SomeValueType getValue()
+	public final SomeValueType getValue()
 	{
+		if (value == null)
+		{
+			throw new NullPointerException("Tried to access a Option's value while it was empty");
+		}
 		return value;
 	}
 
