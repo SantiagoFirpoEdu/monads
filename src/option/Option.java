@@ -113,6 +113,6 @@ public final class Option<SomeValueType>
 		isSet = value != null;
 	}
 
-	private SomeValueType value;
-	private boolean isSet;
+	private final SomeValueType value;
+	private final boolean isSet;
 }
