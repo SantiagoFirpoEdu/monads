@@ -4,6 +4,8 @@ import common.FFunctor;
 import common.FMapper;
 import common.FStatefulMapper;
 import common.FNoneFunctor;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public final class Option<SomeValueType>
 {
@@ -13,17 +15,19 @@ public final class Option<SomeValueType>
 		isSet = false;
 	}
 
-	public static <SomeValueType> Option<SomeValueType> some(final SomeValueType value)
+	@Contract(value = "_ -> new", pure = true)
+	public static <SomeValueType> @NotNull Option<SomeValueType> some(final SomeValueType value)
 	{
 		return new Option<>(value);
 	}
 
-	public static <SomeValueType> Option<SomeValueType> none()
+	@Contract(value = " -> new", pure = true)
+	public static <SomeValueType> @NotNull Option<SomeValueType> none()
 	{
 		return new Option<>();
 	}
 
-	public <ReturnType> Option<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper)
+	public <ReturnType> @NotNull Option<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper)
 	{
 		return isSet ? new Option<>(optionMapper.map(value))
 			         : new Option<>();
@@ -92,11 +96,13 @@ public final class Option<SomeValueType>
 		return value;
 	}
 
+	@Contract(pure = true)
 	public boolean isSet()
 	{
 		return isSet;
 	}
 
+	@Contract(pure = true)
 	public boolean isEmpty()
 	{
 		return !isSet;
