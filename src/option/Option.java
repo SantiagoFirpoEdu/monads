@@ -5,7 +5,7 @@ import common.FMapper;
 import common.FStatefulMapper;
 import common.FNoneFunctor;
 
-public class Option<SomeValueType>
+public final class Option<SomeValueType>
 {
 	public Option()
 	{
@@ -23,19 +23,19 @@ public class Option<SomeValueType>
 		return new Option<>();
 	}
 
-	public final <ReturnType> Option<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper)
+	public <ReturnType> Option<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper)
 	{
 		return isSet ? new Option<>(optionMapper.map(value))
 			         : new Option<>();
 	}
 
-	public final <OutType> OutType mapExpression(final FStatefulMapper<OutType> someMapper, final FStatefulMapper<OutType> noneMapper)
+	public <OutType> OutType mapExpression(final FStatefulMapper<OutType> someMapper, final FStatefulMapper<OutType> noneMapper)
 	{
 		return isSet ? someMapper.map()
 					 : noneMapper.map();
 	}
 
-	public final <OutType> OutType mapExpression(final FMapper<SomeValueType, OutType> someMapper, final FStatefulMapper<OutType> noneMapper)
+	public <OutType> OutType mapExpression(final FMapper<SomeValueType, OutType> someMapper, final FStatefulMapper<OutType> noneMapper)
 	{
 		return isSet ? someMapper.map(value)
 				: noneMapper.map();
@@ -49,7 +49,7 @@ public class Option<SomeValueType>
 		                                       : Option.none();
 	}
 
-	public final void matchSome(FFunctor<SomeValueType> someFunctor)
+	public void matchSome(FFunctor<SomeValueType> someFunctor)
 	{
 		if (isSet)
 		{
@@ -57,7 +57,7 @@ public class Option<SomeValueType>
 		}
 	}
 
-	public final void matchNone(FNoneFunctor noneFunctor)
+	public void matchNone(FNoneFunctor noneFunctor)
 	{
 		if (!isSet)
 		{
@@ -65,7 +65,7 @@ public class Option<SomeValueType>
 		}
 	}
 
-	public final void match(final FFunctor<SomeValueType> someFunctor, final FNoneFunctor noneFunctor)
+	public void match(final FFunctor<SomeValueType> someFunctor, final FNoneFunctor noneFunctor)
 	{
 		if (isSet)
 		{
@@ -78,12 +78,12 @@ public class Option<SomeValueType>
 	}
 
 	@Override
-	public final String toString()
+	public String toString()
 	{
 		return "option.Option{value=%s, getIsSet=%s}".formatted(value, isSet);
 	}
 
-	public final SomeValueType getValue()
+	public SomeValueType getValue()
 	{
 		if (value == null)
 		{
@@ -92,22 +92,17 @@ public class Option<SomeValueType>
 		return value;
 	}
 
-	protected final void setValue(final SomeValueType value)
-	{
-		this.value = value;
-	}
-
-	public final boolean isSet()
+	public boolean isSet()
 	{
 		return isSet;
 	}
 
-	protected final void setIsSet(final boolean set)
+	public boolean isEmpty()
 	{
-		isSet = set;
+		return !isSet;
 	}
 
-	public final SomeValueType getValueOr(final SomeValueType defaultValue)
+	public SomeValueType getValueOr(final SomeValueType defaultValue)
 	{
 		return isSet ? value : defaultValue;
 	}
