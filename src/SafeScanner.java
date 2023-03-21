@@ -1,20 +1,21 @@
 import option.Option;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Scanner;
 
 public class SafeScanner
 {
-	public SafeScanner(Readable source)
+	public SafeScanner(@NotNull Readable source)
 	{
 		scanner = new Scanner(source);
 	}
 
-	public SafeScanner(String source)
+	public SafeScanner(@NotNull String source)
 	{
 		scanner = new Scanner(source);
 	}
 
-	public Option<String> next()
+	public @NotNull Option<String> next()
 	{
 		try
 		{
@@ -26,7 +27,7 @@ public class SafeScanner
 		}
 	}
 
-	public Option<String[]> nextTokens(final int amount)
+	public @NotNull Option<String[]> nextTokens(final int amount)
 	{
 		try
 		{
