@@ -1,6 +1,7 @@
 import option.Option;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class SafeScanner
@@ -10,6 +11,11 @@ public class SafeScanner
 		scanner = new Scanner(source);
 	}
 
+	public SafeScanner(InputStream inputStream)
+	{
+		scanner = new Scanner(inputStream);
+	}
+	public SafeScanner(String source)
 	public SafeScanner(@NotNull String source)
 	{
 		scanner = new Scanner(source);
@@ -45,4 +51,16 @@ public class SafeScanner
 	}
 
 	private final Scanner scanner;
+
+	public Option<String> nextLine()
+	{
+		try
+		{
+			return Option.some(scanner.nextLine());
+		}
+		catch (Exception exception)
+		{
+			return Option.none();
+		}
+	}
 }
