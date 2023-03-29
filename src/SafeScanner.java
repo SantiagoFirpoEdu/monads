@@ -15,7 +15,7 @@ public class SafeScanner
 	{
 		scanner = new Scanner(inputStream);
 	}
-	public SafeScanner(String source)
+
 	public SafeScanner(@NotNull String source)
 	{
 		scanner = new Scanner(source);
