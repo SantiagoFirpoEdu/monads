@@ -7,6 +7,8 @@ import common.FNoneFunctor;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
 public final class Option<SomeValueType>
 {
 	public Option()
@@ -27,7 +29,12 @@ public final class Option<SomeValueType>
 		return new Option<>();
 	}
 
-	public <ReturnType> @NotNull Option<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper)
+	public static <ValueType> Option<ValueType> fromOptional(Optional<ValueType> optional)
+	{
+		return optional.map(Option::some).orElseGet(Option::none);
+	}
+
+    public <ReturnType> @NotNull Option<ReturnType> map(final FMapper<SomeValueType, ReturnType> optionMapper)
 	{
 		return isSet ? new Option<>(optionMapper.map(value))
 			         : new Option<>();
